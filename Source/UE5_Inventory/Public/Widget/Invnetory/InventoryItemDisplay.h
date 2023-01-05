@@ -2,10 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Image.h"
 #include "DataAsset/ItemDataAsset.h"
 #include "InventoryItemDisplay.generated.h"
 
-class UImage;
 class UBorder;
 class UTextBlock;
 class USizeBox;
@@ -48,16 +48,16 @@ public:
 		return SlotIndexOnInventory;
 	}
 
-	//void SetSelectorVisibility(bool Val)
-	//{
-	//	if (Selector)
-	//	{
-	//		if (Val)
-	//			Selector->SetVisibility(ESlateVisibility::Visible);
-	//		else
-	//			Selector->SetVisibility(ESlateVisibility::Hidden);
-	//	}
-	//}
+	void SetSelectorVisibility(bool Val)
+	{
+		if (Selector)
+		{
+			if (Val)
+				Selector->SetVisibility(ESlateVisibility::Visible);
+			else
+				Selector->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
 
 	FIntPoint GetItemSize() const;
 

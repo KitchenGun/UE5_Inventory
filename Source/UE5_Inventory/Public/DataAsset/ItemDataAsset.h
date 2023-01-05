@@ -16,6 +16,18 @@ public:
 	virtual bool IsSupportedForNetworking() const override;
 
 	UFUNCTION(BlueprintCallable)
+	int32 GetID()
+	{
+		return UID;
+	};
+
+	UFUNCTION(BlueprintCallable)
+	void SetID(int32 val)
+	{
+		UID = val;
+	};
+
+	UFUNCTION(BlueprintCallable)
 		const FText& GetItemName() const
 	{
 		return ItemInfo.ItemName;
@@ -142,6 +154,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		EItemStorageType StoragePosition = EItemStorageType::None;//아이템의 보관 위치
 private:
+
+	UPROPERTY(EditAnywhere,Replicated)
+	 uint32 UID;
+
 	UPROPERTY(EditAnywhere, Replicated)
 		FItem ItemInfo;
 

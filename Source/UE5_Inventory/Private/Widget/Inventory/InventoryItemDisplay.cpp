@@ -32,8 +32,8 @@ void UInventoryItemDisplay::Init(UItemDataAsset* BasicItemData)
 			Cast<UCanvasPanelSlot>(ItemIcon->Slot)->SetSize
 			(FVector2D{ static_cast<double>(ItemData->GetItemSize().X),static_cast<double>(ItemData->GetItemSize().Y) } *TileSize);
 		}
-		//SetSelectorVisibility(false);
-		//텍스트 적용
+		SetSelectorVisibility(false);
+		//텍스트 적용／／
 		//if (ItemData->() == 1)
 		//	NameTextBlock->SetText(FText::FromString(FString::Printf(TEXT(""))));
 		//else

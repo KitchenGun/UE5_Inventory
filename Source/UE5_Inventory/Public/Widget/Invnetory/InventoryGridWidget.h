@@ -33,18 +33,12 @@ public:
 	void SetInventoryComponent(UInventoryComponent* InvComp);
 
 	//저장소 형태 저장
-	EItemStorageType GetStorageType()
-	{
-		return StorageType;
-	}
+	EItemStorageType GetStorageType();
 
 	void SetStorageType(EItemStorageType NewStorageType);
 
 
-	UInventoryComponent* GetInventoryComponent()
-	{
-		return InventoryComponent;
-	}
+	UInventoryComponent* GetInventoryComponent();
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 		UGridPanel* InventoryGridPanel = nullptr;
@@ -70,8 +64,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 		UImage* SecurityBorderRight;
 private:
-	int GetFirstAvailableSlotIndex(const FIntPoint& ItemSize) const;
-
 	UPROPERTY()
 		UInventoryComponent* InventoryComponent = nullptr;
 
