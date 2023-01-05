@@ -9,7 +9,7 @@ public class UE5_Inventory : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
         PublicDependencyModuleNames.AddRange(new string[]
-            { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "UMG", "EnhancedInput" });
+            { "Core", "CoreUObject", "Engine", "InputCore","SlateCore", "ImageWrapper","UMG", "EnhancedInput" });
         
         PublicIncludePaths.Add(ModuleDirectory);
     }
