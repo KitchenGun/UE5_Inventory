@@ -321,13 +321,13 @@ public:/*변수*/
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Blueprint Base")
 	//	TSubclassOf<ABodyBag> BodyBagBlueprint;
 	UPROPERTY(EditDefaultsOnly, Category = "Class Settings")
-		TSubclassOf<UInventoryItemDisplay> ItemDisplayClass;
+	TSubclassOf<UInventoryItemDisplay> ItemDisplayClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Class Settings")
-		TSubclassOf<UInventorySlot> InventorySlotClass;
+	TSubclassOf<UInventorySlot> InventorySlotClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-		UItemDataAsset* SecureContainer = nullptr;//보안 공간 아이템
+	UItemDataAsset* SecureContainer = nullptr;//보안 공간 아이템
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-		UInputMappingContext* InvenInputMappingContext = nullptr;
+	UInputMappingContext* InvenInputMappingContext = nullptr;
 
 		
 private:

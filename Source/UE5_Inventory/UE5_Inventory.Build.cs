@@ -10,8 +10,7 @@ public class UE5_Inventory : ModuleRules
 
         PublicDependencyModuleNames.AddRange(new string[]
             { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "UMG", "EnhancedInput" });
-
-        PrivateIncludePaths.Add(ModuleDirectory);
+        
         PublicIncludePaths.Add(ModuleDirectory);
     }
 }
