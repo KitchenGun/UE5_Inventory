@@ -55,14 +55,6 @@ public:
 	TArray<UInventorySlot*> Slots;
 	TMap<UInventorySlot*, bool> SlotmMap;
 
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-		UImage* SecurityBorderUp;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-		UImage* SecurityBorderDown;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-		UImage* SecurityBorderLeft;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-		UImage* SecurityBorderRight;
 private:
 	UPROPERTY()
 		UInventoryComponent* InventoryComponent = nullptr;

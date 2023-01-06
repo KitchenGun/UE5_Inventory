@@ -13,11 +13,6 @@
 
 void UInventoryGridWidget::InitInventoryWidget()
 {
-	SecurityBorderDown->SetVisibility(ESlateVisibility::Hidden);
-	SecurityBorderLeft->SetVisibility(ESlateVisibility::Hidden);
-	SecurityBorderRight->SetVisibility(ESlateVisibility::Hidden);
-	SecurityBorderUp->SetVisibility(ESlateVisibility::Hidden);
-
 	InventoryGridPanel->RowFill.Empty();
 	InventoryGridPanel->ColumnFill.Empty();
 
@@ -76,14 +71,6 @@ void UInventoryGridWidget::InitInventoryWidget()
 
 	InventoryComponent->SetItemSlots(StorageType, Slots);
 	InventoryComponent->SetItemSlotMap(StorageType, SlotmMap);
-
-	if (GetStorageType() == EItemStorageType::SecureContainer)
-	{
-		SecurityBorderDown->SetVisibility(ESlateVisibility::Visible);
-		SecurityBorderLeft->SetVisibility(ESlateVisibility::Visible);
-		SecurityBorderRight->SetVisibility(ESlateVisibility::Visible);
-		SecurityBorderUp->SetVisibility(ESlateVisibility::Visible);
-	}
 }
 
 void UInventoryGridWidget::SetInventoryComponent(UInventoryComponent* InvComp)
