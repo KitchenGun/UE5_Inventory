@@ -24,7 +24,20 @@ public:
 
 	void InitWidget();
 	UFUNCTION()
-		UInventoryGridWidget* GetGrid(EItemStorageType StorageType);
+	UInventoryGridWidget* GetGrid(EItemStorageType StorageType)
+	{
+		switch (StorageType)
+		{
+		case EItemStorageType::BackPack:
+			return BackpackGrid;
+		case EItemStorageType::Storage:
+			return StorageGrid;
+		case EItemStorageType::SecureContainer:
+			return SecureContainerGrid;
+		default:
+			return  nullptr;
+		}
+	}
 
 	//UI에서 아이템 선택 가능 상태
 	void ItemCanSelect();
