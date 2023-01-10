@@ -13,6 +13,23 @@
 
 void UInventoryGridWidget::InitInventoryWidget()
 {
+	if (!IsValid(InventoryComponent))
+	{
+		SetInventoryComponent(Cast<ACharacter>(GetWorld()->GetFirstPlayerController()->GetCharacter())->FindComponentByClass<UInventoryComponent>());
+
+		InventoryComponent->SetItemSlots(StorageType, Slots);
+		InventoryComponent->SetItemSlotMap(StorageType, SlotmMap);
+	}
+
+	for (UInventorySlot* temp : Slots)
+	{
+		temp->InvComp = InventoryComponent;
+	}
+}
+
+void UInventoryGridWidget::NativePreConstruct()
+{
+	Super::NativePreConstruct();
 	InventoryGridPanel->RowFill.Empty();
 	InventoryGridPanel->ColumnFill.Empty();
 
@@ -46,7 +63,6 @@ void UInventoryGridWidget::InitInventoryWidget()
 			InventorySlot->SetPadding(FMargin{ 0, 0, 0, 0 });
 			InventorySlot->SetRenderTransformPivot(FVector2D{ 0,0 });
 			InventorySlot->Owner = this;
-			InventorySlot->InvComp = InventoryComponent;
 			InventorySlot->SetIndex(count);
 			InventorySlot->SetStorageType(StorageType);
 			count++;
@@ -66,11 +82,6 @@ void UInventoryGridWidget::InitInventoryWidget()
 		}
 	}
 
-	if (!IsValid(InventoryComponent))
-		SetInventoryComponent(Cast<ACharacter>(GetWorld()->GetFirstPlayerController()->GetCharacter())->FindComponentByClass<UInventoryComponent>());
-
-	InventoryComponent->SetItemSlots(StorageType, Slots);
-	InventoryComponent->SetItemSlotMap(StorageType, SlotmMap);
 }
 
 void UInventoryGridWidget::SetInventoryComponent(UInventoryComponent* InvComp)

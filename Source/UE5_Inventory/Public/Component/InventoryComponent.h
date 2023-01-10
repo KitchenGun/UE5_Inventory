@@ -114,7 +114,7 @@ public:
 		void GridRemoveItem(UItemDataAsset* ItemData, EItemStorageType StorageType);//아이템 항목에서 제거
 	UFUNCTION()
 		void RemoveEquipSlotOrGrid(UInventoryItemDisplay* InventoryItemDisplay);//기존 아이템의 저장위치에 따라서 다르게 삭제처리 함수
-
+	UFUNCTION(BlueprintCallable)
 	void ResetInventory();
 	void ResetInventory(EItemStorageType Storage);//grid 형태만 구현
 
@@ -173,7 +173,7 @@ public:
 		HasBackPack = val;
 	}
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void SetWidget(UInventoryWidget* Widget)
 	{
 		InventoryWidget = Widget;
@@ -265,12 +265,7 @@ public:
 	}
 
 	void SetCurItem(UItemDataAsset* cur = nullptr);
-
-	//cur body bag
-	FORCEINLINE void SetCurBodyBag(ABodyBag* Val)
-	{
-		CurBodyBag = Val;
-	}
+	
 	//무게
 	FORCEINLINE float GetWeight() const
 	{
@@ -309,11 +304,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void IA_InventoryItemRotate();
 	UFUNCTION(BlueprintCallable)
-		void IA_InventoryEquip();
-	UFUNCTION(BlueprintCallable)
 		void IA_InventoryDrop();
-	UFUNCTION(BlueprintCallable)
-		void IA_InventoryUsingItem();
 
 public:/*변수*/
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Blueprint Base")
@@ -324,8 +315,6 @@ public:/*변수*/
 	TSubclassOf<UInventoryItemDisplay> ItemDisplayClass;
 	UPROPERTY(EditDefaultsOnly, Category = "Class Settings")
 	TSubclassOf<UInventorySlot> InventorySlotClass;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-	UItemDataAsset* SecureContainer = nullptr;//보안 공간 아이템
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UInputMappingContext* InvenInputMappingContext = nullptr;
 
@@ -352,7 +341,6 @@ private:
 
 	//현재아이템
 	UItemDataAsset* CurItem = nullptr;
-	ABodyBag* CurBodyBag = nullptr;
 	//현재 사용하는 아이템 (인벤토리를 닫아도 초기화가 안되게 하기위해서 사용)
 	UItemDataAsset* CurUseItem = nullptr;
 

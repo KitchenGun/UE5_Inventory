@@ -21,6 +21,8 @@ class UE5_INVENTORY_API UInventoryGridWidget : public UUserWidget
 public:
 	void InitInventoryWidget();
 
+	virtual void NativePreConstruct() override;
+
 	UPROPERTY(EditInstanceOnly, Category = "Settings", meta = (ClampMin = "0", ClampMax = "50", UIMin = "0", UIMax = "50", ExpseOnSpawn = true))
 		int ColumnCount = 10;
 

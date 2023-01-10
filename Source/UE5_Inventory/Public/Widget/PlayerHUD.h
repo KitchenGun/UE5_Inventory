@@ -7,6 +7,8 @@
 class ACharacter;
 class UImage;
 class UCanvasPanel;
+class UInventoryWidget;
+
 
 UCLASS()
 class UE5_INVENTORY_API UPlayerHUD : public UUserWidget
@@ -21,6 +23,14 @@ public:
 		void SetCrossHairColor(bool bIsDetected);
 
 
+
+	UFUNCTION(BlueprintCallable)
+	UInventoryWidget* GetInventoryWidget()
+	{
+		return InventoryWidget;
+	}
+	
+
 protected:
 	ACharacter* Player = nullptr;
 
@@ -31,4 +41,7 @@ protected:
 	//크로스헤어 이미지
 	UPROPERTY(meta = (BindWidget))
 		UImage* CrossHair;
+
+	UPROPERTY(meta = (BindWidget))
+		UInventoryWidget* InventoryWidget;
 };
