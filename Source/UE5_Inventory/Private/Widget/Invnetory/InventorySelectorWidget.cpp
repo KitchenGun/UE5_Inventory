@@ -8,11 +8,14 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Widget/Invnetory/InventoryItemDisplay.h"
 #include "Widget/Invnetory/InventoryWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
-void UInventorySelectorWidget::SetSize(FIntPoint Val, int32 TileSize)
+void UInventorySelectorWidget::SetSize(int32 TileSize)
 {
-	CurSize = Val;
-	Cast<UCanvasPanelSlot>(BlinkBorder->Slot)->SetSize(CurSize * TileSize);
+	if(IsValid(UWidgetLayoutLibrary::SlotAsCanvasSlot(BlinkBorder)))
+	{
+		UWidgetLayoutLibrary::SlotAsCanvasSlot(BlinkBorder)->SetSize(FVector2D(TileSize,TileSize));
+	}
 }
 
 void UInventorySelectorWidget::SetInventoryIndex(int Index)

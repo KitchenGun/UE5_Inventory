@@ -44,7 +44,7 @@ void UInventoryComponent::InitSelector()
 	//size 초기화
 	int32 TileSize = InventoryWidget->BackpackGrid->TileSize;
 	//시작 공간에 아이템이 없을 경우
-	InventoryWidget->Selector->SetSize({ (1), (1) }, TileSize);
+	InventoryWidget->Selector->SetSize(TileSize);
 	//아이템이 있을 경우
 	for (auto& temp : GetItemContainer(EItemStorageType::SecureContainer))
 	{
@@ -1346,7 +1346,7 @@ void UInventoryComponent::SetIsOpenInventory(bool IsOpen)
 			temp->SetSelectorVisibility(false);
 		}
 	}
-	InitSelector();
+	//InitSelector();
 	SetIsOpenInventory_Server(IsOpen);
 }
 
@@ -1386,14 +1386,6 @@ void UInventoryComponent::SetIsOpenInventory_NetMulticast_Implementation(bool Is
 	//	CurBodyBag = nullptr;
 	//}
 	//
-	//AZCPlayerController* Controller = Cast<AZCCharacter>(GetOwner())->GetPlayerController();
-	//if (Controller != nullptr && !IsUsingMed)
-	//{
-	//	if (IsOpen)
-	//		Controller->SetInputMappingContext(InvenInputMappingContext);
-	//	else
-	//		Controller->ResetInputMappingContext();
-	//}
 }
 
 void UInventoryComponent::SetIsUsingMed(bool val)
@@ -1444,6 +1436,7 @@ EItemStorageType UInventoryComponent::GetSelectorStorage()
 
 void UInventoryComponent::IA_InventoryMoveUp()
 {
+	UE_LOG(LogTemp,Display,TEXT("?input"));
 	if (GetIsOpenInventory())
 	{
 		MoveSelector({ 0 , -1 });

@@ -20,3 +20,8 @@ void UPlayerHUD::SetCrossHairColor(bool bIsDetected)
 	}
 }
 
+UInventoryWidget* UPlayerHUD::GetInventoryWidget()
+{
+	return InventoryWidget;
+}
+

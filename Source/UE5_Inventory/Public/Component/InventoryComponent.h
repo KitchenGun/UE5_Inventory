@@ -2,15 +2,15 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "InputMappingContext.h"
 #include "InventoryComponent.generated.h"
+
 
 class UInventoryItemDisplay;
 class UInventoryWidget;
 class UInventorySlot;
 class UItemDataAsset;
 class ABaseItem;
-class ABodyBag;
-class UInputMappingContext;
 
 USTRUCT()
 struct FItemNetInfo
@@ -23,7 +23,7 @@ public:
 		int32 Quantity;
 };
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class UE5_INVENTORY_API UInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -94,7 +94,6 @@ public:
 
 	bool PickUpItem(ABaseItem* Item);
 	bool PickUpItem(UItemDataAsset* ItemData);
-	bool PickUpBodyBag(TArray<UItemDataAsset*> Items);
 
 	//필드 드랍 아이템 탐색
 	void SearchItem();
@@ -183,7 +182,7 @@ public:
 	UFUNCTION()
 		void SelectorItemDisplayRoatate();
 	//인벤토리 열려있는지 닫쳐있는지 확인용
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void SetIsOpenInventory(bool IsOpen);
 	UFUNCTION(Server, Reliable)
 		void SetIsOpenInventory_Server(bool IsOpen);
@@ -316,7 +315,7 @@ public:/*변수*/
 	UPROPERTY(EditDefaultsOnly, Category = "Class Settings")
 	TSubclassOf<UInventorySlot> InventorySlotClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-	UInputMappingContext* InvenInputMappingContext = nullptr;
+	UInputMappingContext* InvenInputMappingContext;
 
 		
 private:

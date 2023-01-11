@@ -17,7 +17,7 @@ class UE5_INVENTORY_API UInventorySelectorWidget : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void SetSize(FIntPoint Val, int32 TileSize);//사이즈 변경
+	void SetSize(int32 TileSize);//사이즈 변경
 	UFUNCTION(BlueprintCallable)
 	void SetInventoryIndex(int Index);
 	UFUNCTION(BlueprintCallable)

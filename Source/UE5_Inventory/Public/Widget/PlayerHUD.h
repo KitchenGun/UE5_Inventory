@@ -25,13 +25,8 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	UInventoryWidget* GetInventoryWidget()
-	{
-		return InventoryWidget;
-	}
+	UInventoryWidget* GetInventoryWidget();
 	
-
-protected:
 	ACharacter* Player = nullptr;
 
 	//À§Á¬ Äµ¹ö½º
