@@ -51,6 +51,35 @@ AUE5_InventoryCharacter::AUE5_InventoryCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
+
+void AUE5_InventoryCharacter::IA_Jump(bool Value)
+{
+	if(Value)
+		Jump();
+	else
+		StopJumping();
+}
+
+void AUE5_InventoryCharacter::IA_LookUpDown(float Value)
+{
+	AddControllerPitchInput(Value);
+}
+
+void AUE5_InventoryCharacter::IA_TurnRightLeft(float Value)
+{
+	AddControllerYawInput(Value);
+}
+
+void AUE5_InventoryCharacter::IA_MoveForwardBackward(float Value)
+{
+	MoveForward(Value);
+}
+
+void AUE5_InventoryCharacter::IA_MoveRightLeft(float Value)
+{
+	MoveRight(Value);
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -58,23 +87,23 @@ void AUE5_InventoryCharacter::SetupPlayerInputComponent(class UInputComponent* P
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
-	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &AUE5_InventoryCharacter::MoveForward);
-	PlayerInputComponent->BindAxis("Move Right / Left", this, &AUE5_InventoryCharacter::MoveRight);
+	//PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	//PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	
+	//PlayerInputComponent->BindAxis("Move Forward / Backward", this, &AUE5_InventoryCharacter::MoveForward);
+	//PlayerInputComponent->BindAxis("Move Right / Left", this, &AUE5_InventoryCharacter::MoveRight);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &AUE5_InventoryCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &AUE5_InventoryCharacter::LookUpAtRate);
+	//PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
+	//PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &AUE5_InventoryCharacter::TurnAtRate);
+	//PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
+	//PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &AUE5_InventoryCharacter::LookUpAtRate);
 
 	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &AUE5_InventoryCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &AUE5_InventoryCharacter::TouchStopped);
+	//PlayerInputComponent->BindTouch(IE_Pressed, this, &AUE5_InventoryCharacter::TouchStarted);
+	//PlayerInputComponent->BindTouch(IE_Released, this, &AUE5_InventoryCharacter::TouchStopped);
 }
 
 void AUE5_InventoryCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)

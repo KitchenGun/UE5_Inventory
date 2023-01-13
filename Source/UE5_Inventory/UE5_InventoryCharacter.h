@@ -25,6 +25,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
+
+	/* 입력 관련 함수 */
+	UFUNCTION(BlueprintCallable)
+	void IA_Jump(bool Value);
+	UFUNCTION(BlueprintCallable)
+	void IA_LookUpDown(float Value);
+	UFUNCTION(BlueprintCallable)
+		void IA_TurnRightLeft(float Value);
+	UFUNCTION(BlueprintCallable)
+		void IA_MoveForwardBackward(float Value);
+	UFUNCTION(BlueprintCallable)
+		void IA_MoveRightLeft(float Value);
 protected:
 
 	/** Called for forwards/backward input */
