@@ -19,6 +19,8 @@ public:
 	//NeedDef 생성전에 정의해야하는 부분
 	//앞에 붙은 아이템 종류에 따라 해당 종류면 무조건 DT에서 정의해줘야하는 변수
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemNeedDef)
+		FName ID;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemNeedDef)
 		EItemType ItemType;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemNeedDef, meta = (ClampMin = "1", ClampMax = "10", UIMin = "1", UIMax = "10"))
 		FIntPoint ItemSize;

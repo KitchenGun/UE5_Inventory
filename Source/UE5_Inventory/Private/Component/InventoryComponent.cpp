@@ -452,8 +452,6 @@ void UInventoryComponent::SelectItem(FVector2D Pos)
 	//일반 그리드의 경우
 	if (!InventoryWidget->Selector->GetIsPointToEquipmentPlace())
 	{
-		if (CurItem->GetID() == 0)
-			return;
 		SelectMoveItem();
 	}
 }
@@ -951,7 +949,7 @@ void UInventoryComponent::ResetInventory(EItemStorageType Storage)
 
 }
 
-void UInventoryComponent::DropItem(int32 ID, int32 Quantity, UItemDataAsset* Item)
+void UInventoryComponent::DropItem(FName ID, int32 Quantity, UItemDataAsset* Item)
 {
 	if (GetWorld()->GetFirstPlayerController() && IsValid(Item))
 	{
@@ -1035,10 +1033,7 @@ void UInventoryComponent::DropItemAll()
 			{
 				for (auto temp : ItemContainer[Val])
 				{
-					if (temp->ItemData->GetID() != 1)
-					{
-						TotalItemContainer.Add(temp->ItemData);
-					}
+					TotalItemContainer.Add(temp->ItemData);
 				}
 			}
 		}
@@ -1411,8 +1406,6 @@ void UInventoryComponent::SetCurItem(UItemDataAsset* cur)
 	{
 		for (const auto& temp : GetItemContainer(GetSelectorStorage()))
 		{
-			if (temp->ItemData->GetID() == 0)
-				continue;
 			//temp 아이템의 위치 , 크기
 			if ((temp->ItemData->GetItemPos().X <= GetCoordinateByIndex(SelectorPos, GetSelectorStorage()).X && GetCoordinateByIndex(SelectorPos, GetSelectorStorage()).X < temp->ItemData->GetItemPos().X + temp->ItemData->GetItemSize().X)
 				&& (temp->ItemData->GetItemPos().Y <= GetCoordinateByIndex(SelectorPos, GetSelectorStorage()).Y && GetCoordinateByIndex(SelectorPos, GetSelectorStorage()).Y < temp->ItemData->GetItemPos().Y + temp->ItemData->GetItemSize().Y))

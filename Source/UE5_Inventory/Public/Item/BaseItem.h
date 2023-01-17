@@ -22,7 +22,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated)
 		UItemDataAsset* ItemData = nullptr;
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void SetItemData(const FItemNetInfo& ItemNetInfo);
 
 	UFUNCTION(NetMulticast, Reliable)
@@ -36,16 +36,16 @@ public:
 	//	void AddObserver(ACharacter* Player);
 	//UFUNCTION()//구독자 제거
 	//	void DeleteObserver(ACharacter* Player);
-private:
+
 	//옵저버 패턴 구독자 배열
 	//TArray<ACharacter*> Observer;
 
-	UPROPERTY(EditInstanceOnly)
+	UPROPERTY(BlueprintReadWrite)
 		UStaticMeshComponent* MeshComponent = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 		UBoxComponent* BoxCollision = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 		USceneComponent* SceneComponent = nullptr;
 };

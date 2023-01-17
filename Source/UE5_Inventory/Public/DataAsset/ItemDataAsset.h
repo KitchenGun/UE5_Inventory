@@ -16,7 +16,13 @@ public:
 	virtual bool IsSupportedForNetworking() const override;
 
 	UFUNCTION(BlueprintCallable)
-	int32 GetID()
+	FName GetID()
+	{
+		return ItemInfo.ID;
+	};
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetUID()
 	{
 		return UID;
 	};

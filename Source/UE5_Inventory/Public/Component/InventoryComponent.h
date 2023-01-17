@@ -12,13 +12,13 @@ class UInventorySlot;
 class UItemDataAsset;
 class ABaseItem;
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FItemNetInfo
 {
 	GENERATED_BODY()
 public:
 	UPROPERTY()
-		int32 ID;
+		FName ID;
 	UPROPERTY()
 		int32 Quantity;
 };
@@ -126,7 +126,7 @@ public:
 		void DropItemEvent();
 	/*¹°°Ç ¶³±¸´Â ÇÔ¼ö*/
 	/*!!!ÁÖÀÇ ½Ì±ÛÅæ °´Ã¼°¡ ¾øÀ¸¸é Æ¨±è!!!*/
-	void DropItem(int32 ID, int32 Quantity, UItemDataAsset* Item);
+	void DropItem(FName ID, int32 Quantity, UItemDataAsset* Item);
 	UFUNCTION(Server, Reliable)
 		void DropItem_Server(const FItemNetInfo& ItemNetInfo);
 	void DropItem_Server_Implementation(const FItemNetInfo& ItemNetInfo);

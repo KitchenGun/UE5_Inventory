@@ -1,5 +1,8 @@
 #include "Item/BaseItem.h"
 #include "Components/BoxComponent.h"
+#include "UE5_InventoryGameInstance.h"
+#include "DataAsset/ItemDataAsset.h"
+#include "Library/InventoryStructLibrary.h"
 
 
 ABaseItem::ABaseItem()
@@ -31,11 +34,11 @@ void ABaseItem::SetItemData(const FItemNetInfo& ItemNetInfo)
 
 void ABaseItem::SetItemData_Server_Implementation(const FItemNetInfo& ItemNetInfo)
 {
-	//FItem NewItem = *Cast<GameInstance>(GetGameInstance())->GetItemInfo(FName(FString::FromInt(ItemNetInfo.ID)));
+	FItem NewItem = *Cast<UUE5_InventoryGameInstance>(GetGameInstance())->GetItemInfo(ItemNetInfo.ID);
 	//데이터 테이블 접근해서 받아오기
-	//ItemData = NewItem.DataAsset;
-	//MeshComponent->SetStaticMesh(NewItem.ItemMesh);
-	//ItemData->SetQuantity(ItemNetInfo.Quantity);
+	ItemData->SetItemInfo(NewItem);
+	MeshComponent->SetStaticMesh(NewItem.ItemMesh);
+	ItemData->SetQuantity(ItemNetInfo.Quantity);
 }
 
 void ABaseItem::Interact()
