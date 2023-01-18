@@ -21,9 +21,17 @@ class AUE5_InventoryCharacter : public ACharacter
 public:
 	AUE5_InventoryCharacter();
 
+	virtual void BeginPlay() override;
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
+
+	/*상호작용 라인트레이스*/
+	void Interact();
+	/*UI BP에서 처리*/
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateCrossHair();
 
 
 	/* 입력 관련 함수 */
@@ -73,5 +81,17 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	/*상호작용 오브젝트를 바라보는 경우*/
+	UPROPERTY(EditAnywhere,BlueprintGetter="GetIsInteraction")
+	bool CanInteraction = false;
+
+	UFUNCTION(BlueprintGetter)
+	FORCEINLINE bool GetIsInteraction()
+	{
+		return CanInteraction;
+	}
+	/*상호작용 타이머*/
+	FTimerHandle InteractHandler;
 };
 

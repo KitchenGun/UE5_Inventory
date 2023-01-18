@@ -40,12 +40,12 @@ public:
 	//옵저버 패턴 구독자 배열
 	//TArray<ACharacter*> Observer;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 		UStaticMeshComponent* MeshComponent = nullptr;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 		UBoxComponent* BoxCollision = nullptr;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 		USceneComponent* SceneComponent = nullptr;
 };

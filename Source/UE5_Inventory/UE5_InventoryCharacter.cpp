@@ -4,9 +4,12 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "DataAsset/ItemDataAsset.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Item/BaseItem.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AUE5_InventoryCharacter
@@ -49,8 +52,64 @@ AUE5_InventoryCharacter::AUE5_InventoryCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	
 }
 
+void AUE5_InventoryCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	//InteractTimer// 종료시 까지 반복
+	GetWorldTimerManager().SetTimer(InteractHandler, this, &AUE5_InventoryCharacter::Interact, 0.1f, true);
+}
+
+
+void AUE5_InventoryCharacter::Interact()
+{
+
+	FVector2D CrossHairLocation = FVector2D(0.5f,0.5f);
+	float TraceLength = 600.0f;
+	
+	FHitResult HitResult;
+
+	/* 라인 트레이스의 결과가 있으면 해당 결과로부터 액터를 얻는다. */
+	FVector CrossHairWorldPosition;
+	FVector CrossHairWorldDirection;
+	UGameplayStatics::DeprojectScreenToWorld(GetWorld()->GetFirstPlayerController(), FVector2D(GEngine->GameViewport->Viewport->GetSizeXY() / 2.0f), CrossHairWorldPosition, CrossHairWorldDirection);
+	/*시작 위치와 종료위치 계산*/
+	FVector Start = CrossHairWorldPosition;
+	FVector End = CrossHairWorldPosition + (CrossHairWorldDirection*TraceLength);
+
+	if (!GetWorld()->LineTraceSingleByProfile(HitResult, Start, End, FName("Item")))
+	{
+		/* 라인 트레이스의 결과가 없으면 HitResult의 Location을 트레이스 목표지점(End)으로 설정 */
+		HitResult.Location = FVector_NetQuantize(End);
+	}
+	
+	/* 라인트레이스에 감지된 오브젝트가 있다면 */
+	if (HitResult.bBlockingHit == 1)
+	{
+		//상호작용중이라는 변수 값 수정
+		CanInteraction = true;
+		AActor* HitActor = HitResult.GetActor();
+
+		/*상호작용 액터에 대한 처리 */
+		if (TObjectPtr<ABaseItem> ItemActor = Cast<ABaseItem>(HitActor))
+		{
+			UE_LOG(LogTemp,Display,TEXT("%s"),*ItemActor->ItemData->GetItemName().ToString());
+			
+		}
+	}
+	else
+	{
+		//상호작용중이라는 변수 값 수정
+		CanInteraction = false;
+	}
+
+	//crosshair update
+	UpdateCrossHair();
+}
 
 void AUE5_InventoryCharacter::IA_Jump(bool Value)
 {
