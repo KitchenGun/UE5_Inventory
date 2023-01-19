@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "UE5_InventoryCharacter.generated.h"
 
+
+class UInventoryComponent;
+
 UCLASS(config=Game)
 class AUE5_InventoryCharacter : public ACharacter
 {
@@ -28,10 +31,20 @@ public:
 	float TurnRateGamepad;
 
 	/*상호작용 라인트레이스*/
+	UFUNCTION(BlueprintCallable)
 	void Interact();
+	AActor* InteractLineTraceFunc();
 	/*UI BP에서 처리*/
 	UFUNCTION(BlueprintImplementableEvent)
 	void UpdateCrossHair();
+
+	/*상호작용*/
+	UFUNCTION(Server, Reliable)
+	void GetInteractableObject_Server(UInventoryComponent* InvComp, AActor* ItemActor);
+	void GetInteractableObject_Server_Implementation(UInventoryComponent* InvComp, AActor* ItemActor);
+	UFUNCTION(NetMulticast, Reliable)
+	void GetInteractableObject_Client(UInventoryComponent* InvComp, AActor* ItemActor);
+	void GetInteractableObject_Client_Implementation(UInventoryComponent* InvComp, AActor* ItemActor);
 
 
 	/* 입력 관련 함수 */
@@ -45,6 +58,8 @@ public:
 		void IA_MoveForwardBackward(float Value);
 	UFUNCTION(BlueprintCallable)
 		void IA_MoveRightLeft(float Value);
+	UFUNCTION(BlueprintCallable)
+	void IA_Interact();
 protected:
 
 	/** Called for forwards/backward input */
@@ -82,6 +97,9 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UInventoryComponent* InventoryComponent;
+
 	/*상호작용 오브젝트를 바라보는 경우*/
 	UPROPERTY(EditAnywhere,BlueprintGetter="GetIsInteraction")
 	bool CanInteraction = false;
@@ -91,6 +109,7 @@ public:
 	{
 		return CanInteraction;
 	}
+
 	/*상호작용 타이머*/
 	FTimerHandle InteractHandler;
 };

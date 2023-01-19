@@ -53,7 +53,8 @@ AUE5_InventoryCharacter::AUE5_InventoryCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
-	
+	//component
+	InventoryComponent = FindComponentByClass<UInventoryComponent>();
 }
 
 void AUE5_InventoryCharacter::BeginPlay()
@@ -67,10 +68,17 @@ void AUE5_InventoryCharacter::BeginPlay()
 
 void AUE5_InventoryCharacter::Interact()
 {
+	//아이템을 바라보는지 확인
+	CanInteraction=(InteractLineTraceFunc()==nullptr?false:true);
+	//crosshair update
+	UpdateCrossHair();
+}
 
-	FVector2D CrossHairLocation = FVector2D(0.5f,0.5f);
+AActor* AUE5_InventoryCharacter::InteractLineTraceFunc()
+{
+	FVector2D CrossHairLocation = FVector2D(0.5f, 0.5f);
 	float TraceLength = 600.0f;
-	
+
 	FHitResult HitResult;
 
 	/* 라인 트레이스의 결과가 있으면 해당 결과로부터 액터를 얻는다. */
@@ -79,36 +87,39 @@ void AUE5_InventoryCharacter::Interact()
 	UGameplayStatics::DeprojectScreenToWorld(GetWorld()->GetFirstPlayerController(), FVector2D(GEngine->GameViewport->Viewport->GetSizeXY() / 2.0f), CrossHairWorldPosition, CrossHairWorldDirection);
 	/*시작 위치와 종료위치 계산*/
 	FVector Start = CrossHairWorldPosition;
-	FVector End = CrossHairWorldPosition + (CrossHairWorldDirection*TraceLength);
+	FVector End = CrossHairWorldPosition + (CrossHairWorldDirection * TraceLength);
 
 	if (!GetWorld()->LineTraceSingleByProfile(HitResult, Start, End, FName("Item")))
 	{
 		/* 라인 트레이스의 결과가 없으면 HitResult의 Location을 트레이스 목표지점(End)으로 설정 */
 		HitResult.Location = FVector_NetQuantize(End);
 	}
-	
+
 	/* 라인트레이스에 감지된 오브젝트가 있다면 */
 	if (HitResult.bBlockingHit == 1)
 	{
-		//상호작용중이라는 변수 값 수정
-		CanInteraction = true;
-		AActor* HitActor = HitResult.GetActor();
-
-		/*상호작용 액터에 대한 처리 */
-		if (TObjectPtr<ABaseItem> ItemActor = Cast<ABaseItem>(HitActor))
-		{
-			UE_LOG(LogTemp,Display,TEXT("%s"),*ItemActor->ItemData->GetItemName().ToString());
-			
-		}
+		return HitResult.GetActor();
 	}
 	else
 	{
-		//상호작용중이라는 변수 값 수정
-		CanInteraction = false;
+		return nullptr;
 	}
+}
 
-	//crosshair update
-	UpdateCrossHair();
+void AUE5_InventoryCharacter::GetInteractableObject_Server_Implementation(UInventoryComponent* InvComp,
+	AActor* ItemActor)
+{
+	GetInteractableObject_Client(InvComp, ItemActor);
+}
+
+void AUE5_InventoryCharacter::GetInteractableObject_Client_Implementation(UInventoryComponent* InvComp,
+	AActor* ItemActor)
+{
+	if (IsValid(ItemActor))//아이템
+	{
+		//InvComp->AddWeight(ItemActor->ItemData->GetItemInfo().Weight * ItemActor->ItemData->GetQuantity());
+		ItemActor->Destroy();
+	}
 }
 
 void AUE5_InventoryCharacter::IA_Jump(bool Value)
@@ -137,6 +148,16 @@ void AUE5_InventoryCharacter::IA_MoveForwardBackward(float Value)
 void AUE5_InventoryCharacter::IA_MoveRightLeft(float Value)
 {
 	MoveRight(Value);
+}
+
+void AUE5_InventoryCharacter::IA_Interact()
+{
+	ABaseItem* Item = Cast<ABaseItem>(InteractLineTraceFunc());
+	//아이템인 경우
+	if(IsValid(Item))
+	{	//상호작용
+		Item->Interact();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

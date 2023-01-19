@@ -1,4 +1,6 @@
 #include "Item/BaseItem.h"
+
+#include "UE5_InventoryCharacter.h"
 #include "Components/BoxComponent.h"
 #include "UE5_InventoryGameInstance.h"
 #include "DataAsset/ItemDataAsset.h"
@@ -43,7 +45,9 @@ void ABaseItem::SetItemData_Server_Implementation(const FItemNetInfo& ItemNetInf
 
 void ABaseItem::Interact()
 {
-	//ACharacter* Player = Cast<ACharacter>(GetWorld()->GetFirstPlayerController()->GetCharacter());
-	//Player->GetInteractableObject_Server(Player->FindComponentByClass<UInventoryComponent>(), this);
+	AUE5_InventoryCharacter* Player = Cast<AUE5_InventoryCharacter>(GetWorld()->GetFirstPlayerController()->GetCharacter());
+	if(Player==nullptr)
+		return;
+	Player->GetInteractableObject_Server(Player->FindComponentByClass<UInventoryComponent>(), this);
 }
 
