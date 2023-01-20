@@ -6,7 +6,7 @@
 #include "DataAsset/ItemDataAsset.h"
 #include "Engine/ActorChannel.h"
 #include "GameFramework/Character.h"
-#include "Library/InventoryStructLibrary.h"
+#include "Item/BaseItem.h"
 #include "Net/UnrealNetwork.h"
 #include "Widget/Invnetory/InventoryGridWidget.h"
 #include "Widget/Invnetory/InventoryItemDisplay.h"
@@ -18,6 +18,11 @@
 ENUM_RANGE_BY_COUNT(EItemStorageType, EItemStorageType::Max)
 
 UInventoryComponent::UInventoryComponent()
+{
+	
+}
+
+void UInventoryComponent::Init()
 {
 	for (EItemStorageType Val : TEnumRange<EItemStorageType>())
 	{
@@ -278,12 +283,10 @@ void UInventoryComponent::MoveEquipmentSelector(FIntPoint Input)
 	//입력 방향을 더함
 	Next += Input.X;
 
-	//현재 장비창에 선택중인 표시 지우기
-	SelectorEquipmentPlaceClear();
+
 	//다음 장비창으로 이동
 	InventoryWidget->Selector->SetStorage(static_cast<EItemStorageType>(Next));
-	//해당 장비창 선택 위젯 표시
-	SelectorEquipmentPlaceMark(GetSelectorStorage());
+	
 
 	//그리드 모두 순회시
 	if (static_cast<EItemStorageType>(Next) == EItemStorageType::Max)//Max까지 도달하면 그리드로 선택 위젯 이동(비주얼적으로)
@@ -456,177 +459,6 @@ void UInventoryComponent::SelectItem(FVector2D Pos)
 	}
 }
 
-void UInventoryComponent::SelectWeaponEquipment()
-{
-	//선택한 장비가 없을 경우
-	//if (!IsValid(InventoryWidget->Selector->CurDisplayWidget))
-	//	return;
-	//
-	////장착이 되면 장착 안되면 다음 슬롯 확인
-	//if (InventoryWidget->PrimaryWeapon->EquipmentByDisplayInfo
-	//(InventoryWidget->Selector->CurDisplayWidget))
-	//{
-	//	//기존 그리드에서 아이템 데이터 삭제
-	//	InventoryWidget->Selector->CurDisplayWidget->SetVisibility(ESlateVisibility::Hidden);
-	//	InitSelector();
-	//}
-	//else if (InventoryWidget->PrimaryWeapon1->EquipmentByDisplayInfo
-	//(InventoryWidget->Selector->CurDisplayWidget))
-	//{
-	//	//기존 그리드에서 아이템 데이터 삭제
-	//	InventoryWidget->Selector->CurDisplayWidget->SetVisibility(ESlateVisibility::Hidden);
-	//	InitSelector();
-	//}
-	//else
-	//{
-	//	UE_LOG(LogTemp, Display, TEXT("Equip Fail All Slot Use"));
-	//}
-	//
-	////기능 UI 비활성화
-	//InventoryWidget->DisableSelectInfos();
-}
-
-void UInventoryComponent::SelectWeaponUnEquipment()
-{
-	//switch (GetSelectorStorage())
-	//{
-	//case EItemStorageType::PrimaryWeapon:
-	//	//비어있지 않으면 장착 해제
-	//	if (!InventoryWidget->PrimaryWeapon->GetIsSlotEmpty())
-	//	{
-	//		PickUpItem(InventoryWidget->PrimaryWeapon->GetWeapon());
-	//		InventoryWidget->PrimaryWeapon->RemoveEquipment();
-	//	}
-	//	break;
-	//case EItemStorageType::PrimaryWeapon1:
-	//	//비어있지 않으면 장착 해제
-	//	if (!InventoryWidget->PrimaryWeapon1->GetIsSlotEmpty())
-	//	{
-	//		PickUpItem(InventoryWidget->PrimaryWeapon1->GetWeapon());
-	//		InventoryWidget->PrimaryWeapon1->RemoveEquipment();
-	//	}
-	//	break;
-	//default:
-	//	break;
-	//}
-	////기능 UI 비활성화
-	//InventoryWidget->DisableSelectInfos();
-}
-
-void UInventoryComponent::SelectorEquipmentPlaceClear()
-{
-	////장비창이 비어있는 경우만 지워버림
-	//if (InventoryWidget->PrimaryWeapon->GetIsSlotEmpty())
-	//{
-	//	InventoryWidget->PrimaryWeapon->WeaponDisplayWidget->SetVisibility(ESlateVisibility::Hidden);
-	//	InventoryWidget->PrimaryWeapon->WeaponDisplayWidget->SetSelectorVisibility(false);
-	//}
-	//else
-	//{
-	//	InventoryWidget->PrimaryWeapon->WeaponDisplayWidget->SetSelectorVisibility(false);
-	//}
-	//if (InventoryWidget->PrimaryWeapon1->GetIsSlotEmpty())
-	//{
-	//	InventoryWidget->PrimaryWeapon1->WeaponDisplayWidget->SetVisibility(ESlateVisibility::Hidden);
-	//	InventoryWidget->PrimaryWeapon1->WeaponDisplayWidget->SetSelectorVisibility(false);
-	//}
-	//else
-	//{
-	//	InventoryWidget->PrimaryWeapon1->WeaponDisplayWidget->SetSelectorVisibility(false);
-	//}
-}
-
-void UInventoryComponent::SelectorEquipmentPlaceMark(EItemStorageType Storage)
-{
-	////기능 UI 비활성화
-	//InventoryWidget->DisableSelectInfos();
-	//switch (Storage)
-	//{
-	//case EItemStorageType::PrimaryWeapon:
-	//	if (!InventoryWidget->PrimaryWeapon->GetIsSlotEmpty())
-	//		InventoryWidget->ItemCanSelect();
-	//	InventoryWidget->PrimaryWeapon->WeaponDisplayWidget->SetVisibility(ESlateVisibility::Visible);
-	//	InventoryWidget->PrimaryWeapon->WeaponDisplayWidget->SetSelectorVisibility(true);
-	//	break;
-	//case EItemStorageType::PrimaryWeapon1:
-	//	if (!InventoryWidget->PrimaryWeapon1->GetIsSlotEmpty())
-	//		InventoryWidget->ItemCanSelect();
-	//	InventoryWidget->PrimaryWeapon1->WeaponDisplayWidget->SetVisibility(ESlateVisibility::Visible);
-	//	InventoryWidget->PrimaryWeapon1->WeaponDisplayWidget->SetSelectorVisibility(true);
-	//	break;
-	//default:
-	//	break;
-	//}
-}
-
-void UInventoryComponent::SelectItemUse()
-{
-	////사용할 아이템이 없으면 반환
-	//if (!IsValid(InventoryWidget->Selector->CurItem))
-	//	return;
-	//ACharacter* Player = Cast<ACharacter>(GetOwner());
-	////아이템 사용 //아이템 타입 확인하고 타입에 맞는 함수 호출
-	//switch (InventoryWidget->Selector->CurItem->GetItemInfo().ItemType)
-	//{
-	//case EItemType::Weapon:
-	//	//임시 키 입력 확인용
-	//	UE_LOG(LogTemp, Display, TEXT("nothing add here"));
-	//	break;
-	//case EItemType::WeaponMods:
-	//
-	//	break;
-	//case EItemType::Ammunition:
-	//
-	//	break;
-	//case EItemType::Clothing:
-	//
-	//	break;
-	//case EItemType::Provisions:
-	//
-	//	break;
-	//case EItemType::Medical:
-	//	//사용시간이 필요하면 여기에 타이머 추가 해야함
-	//	CurUseItem = CurItem;
-	//	Player->HealAnimationStart(CurUseItem->GetItemInfo().MedicalType, CurUseItem->GetItemInfo().UsingTime);
-	//	//선택 위젯&아이템 디스플레이 초기화
-	//	DeSelectItem();
-	//	break;
-	//case EItemType::Loot:
-	//	break;
-	//default:
-	//	break;
-	//}
-}
-
-void UInventoryComponent::UseMedItem()
-{
-	//치료템 종류 확인
-	//ACharacter* Player = Cast<ACharacter>(GetOwner());
-	//if (!IsValid(Player))
-	//	return;
-	//switch (CurUseItem->GetItemInfo().MedicalUsingType)
-	//{
-	//case EMedicalItemUsingType::Immediately:
-	//	Player->AddHealthInfo(
-	//		CurUseItem->GetItemInfo().HPRecoveryAmount,			//체력
-	//		CurUseItem->GetItemInfo().StaminaRecoveryAmount,		//스테미나
-	//		CurUseItem->GetItemInfo().TemperatureRecoveryAmount);	//체온
-	//	break;
-	//case EMedicalItemUsingType::Progressive:
-	//	//타임 핸들러로 RecoveryCount만큼 Player->AddHealthInfo 정하진 시간 마다 호출하게 하면됨
-	//	break;
-	//
-	//default:
-	//	break;
-	//}
-	////수량 업데이트&아이템 삭제
-	//UseItemQuantityChange();
-	////인벤토리 아이템 기능 표시 UI 비활성화
-	//InventoryWidget->DisableSelectInfos();
-	////초기화
-	//CurUseItem = nullptr;
-}
-
 void UInventoryComponent::UseItemQuantityChange()
 {
 	//수량 줄이기
@@ -755,10 +587,10 @@ void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 
 bool UInventoryComponent::PickUpItem(ABaseItem* Item)
 {
-	//if (IsValid(Item->ItemData))
-	//{
-	//	return PickUpItem(Item->ItemData);
-	//}
+	if (IsValid(Item->ItemData))
+	{
+		return PickUpItem(Item->ItemData);
+	}
 	return false;
 }
 
@@ -1500,7 +1332,7 @@ void UInventoryComponent::IA_InventoryItemRotate()
 	{
 		if (GetCurItem())
 		{
-			SelectWeaponEquipment();
+			GetCurItem()->SetIsRotate(!GetCurItem()->GetIsRotate());
 		}
 	}
 }

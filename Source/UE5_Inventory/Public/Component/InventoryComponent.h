@@ -30,6 +30,10 @@ class UE5_INVENTORY_API UInventoryComponent : public UActorComponent
 
 public:
 	UInventoryComponent();
+
+	UFUNCTION(BlueprintCallable)
+	void Init();
+
 	/*tarray replicate*/
 	virtual bool ReplicateSubobjects(UActorChannel* Channel, FOutBunch* Bunch, FReplicationFlags* RepFlags) override;
 	/*tarray replicate*/
@@ -62,26 +66,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SelectItem(FVector2D Pos = FVector2D(-1, -1));
 
-	/*장비 선택 관련 함수*/
-	//선택 위젯이 가리키는 무기가 있을 경우 장착
-	void SelectWeaponEquipment();
-	//선택 위젯이 가리키는 무기가 있을 경우 장착 해제
-	void SelectWeaponUnEquipment();
-	//모든 장비 위젯에 선택됨 해제
-	void SelectorEquipmentPlaceClear();
-	//특정 장비 위젯에 선택됨 활성화
-	void SelectorEquipmentPlaceMark(EItemStorageType Storage);
-
-	/*아이템 사용 관련 함수*/
-	//선택한 아이템 사용
-	void SelectItemUse();
-	//아이템 사용중 중단
-	UFUNCTION(BlueprintImplementableEvent)
-		void ItemUseCancel();
-
-	//의료아이템 사용
-	UFUNCTION(BlueprintCallable)
-		void UseMedItem();
 	void UseItemQuantityChange();
 
 	//선택 위젯 움직이기

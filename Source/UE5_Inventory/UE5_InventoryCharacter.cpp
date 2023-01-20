@@ -52,9 +52,6 @@ AUE5_InventoryCharacter::AUE5_InventoryCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
-
-	//component
-	InventoryComponent = FindComponentByClass<UInventoryComponent>();
 }
 
 void AUE5_InventoryCharacter::BeginPlay()
@@ -63,6 +60,16 @@ void AUE5_InventoryCharacter::BeginPlay()
 
 	//InteractTimer// 종료시 까지 반복
 	GetWorldTimerManager().SetTimer(InteractHandler, this, &AUE5_InventoryCharacter::Interact, 0.1f, true);
+}
+
+void AUE5_InventoryCharacter::InitInventoryComp()
+{
+	if (InventoryComponent && IsLocallyControlled())
+	{
+		InventoryComponent->SetIsReplicated(true);
+		//Inv 초기화
+		InventoryComponent->ResetInventory();
+	}
 }
 
 
@@ -157,6 +164,7 @@ void AUE5_InventoryCharacter::IA_Interact()
 	if(IsValid(Item))
 	{	//상호작용
 		Item->Interact();
+		InventoryComponent->PickUpItem(Item);
 	}
 }
 

@@ -23,26 +23,23 @@ void UInventoryItemDisplay::Init(UItemDataAsset* BasicItemData)
 	{
 		ItemIcon->SetVisibility(ESlateVisibility::Visible);
 		ItemIcon->SetBrushFromSoftTexture(ItemData->GetThumbnail(), true);
-		IconSizeBox->SetHeightOverride(ItemData->GetItemSize().Y * TileSize);
-		IconSizeBox->SetWidthOverride(ItemData->GetItemSize().X * TileSize);
+
 		if (ItemData->GetIsRotate())
 		{
-			Cast<UCanvasPanelSlot>(ItemIcon->Slot)->SetSize
-			(FVector2D{ static_cast<double>(ItemData->GetItemSize().Y),static_cast<double>(ItemData->GetItemSize().X) } *TileSize);
 			ItemData->SetIsRotate(false);
 			IsRotate();
 		}
-		else
-		{
-			Cast<UCanvasPanelSlot>(ItemIcon->Slot)->SetSize
-			(FVector2D{ static_cast<double>(ItemData->GetItemSize().X),static_cast<double>(ItemData->GetItemSize().Y) } *TileSize);
-		}
+		IconSizeBox->SetHeightOverride(ItemData->GetItemSize().Y * TileSize);
+		IconSizeBox->SetWidthOverride(ItemData->GetItemSize().X * TileSize);
+
+		ImageSizeUpdate(ItemData);
+
 		SetSelectorVisibility(false);
 		//텍스트 적용／／
-		//if (ItemData->() == 1)
-		//	NameTextBlock->SetText(FText::FromString(FString::Printf(TEXT(""))));
+		//if (ItemData->GetQuantity() == 1)
+		//	StackSizeTextBlock->SetText(FText::FromString(FString::Printf(TEXT(""))));
 		//else
-			NameTextBlock->SetText(FText(ItemData->GetItemName()));
+		//	StackSizeTextBlock->SetText(FText(ItemData->GetItemName()));
 		//수량 표기 업데이트
 		UpdateQuantity();
 	}

@@ -20,9 +20,7 @@ void UInventoryWidget::InitWidget()
 	SecureContainerGrid->SetStorageType(EItemStorageType::SecureContainer);
 	StorageGrid->SetStorageType(EItemStorageType::Storage);
 	BackpackGrid->SetStorageType(EItemStorageType::BackPack);
-	//PrimaryWeapon->SlotType = EWeaponItemSlotType::PrimaryWeapon;
-	//PrimaryWeapon->SlotType = EWeaponItemSlotType::PrimaryWeapon;
-	//
+
 	//inv comp 세팅
 	UInventoryComponent* InvComp = Cast<ACharacter>
 		(GetWorld()->GetFirstPlayerController()->GetCharacter())->
@@ -30,8 +28,6 @@ void UInventoryWidget::InitWidget()
 	SecureContainerGrid->SetInventoryComponent(InvComp);
 	BackpackGrid->SetInventoryComponent(InvComp);
 	StorageGrid->SetInventoryComponent(InvComp);
-	//PrimaryWeapon->SetInventoryComponent(InvComp);
-	//PrimaryWeapon1->SetInventoryComponent(InvComp);
 	//아이템 설명 초기화
 	DisableSelectInfos();
 }

@@ -16,10 +16,10 @@ void UInventoryGridWidget::InitInventoryWidget()
 	if (!IsValid(InventoryComponent))
 	{
 		SetInventoryComponent(Cast<ACharacter>(GetWorld()->GetFirstPlayerController()->GetCharacter())->FindComponentByClass<UInventoryComponent>());
-
-		InventoryComponent->SetItemSlots(StorageType, Slots);
-		InventoryComponent->SetItemSlotMap(StorageType, SlotmMap);
 	}
+
+	InventoryComponent->SetItemSlots(StorageType, Slots);
+	InventoryComponent->SetItemSlotMap(StorageType, SlotmMap);
 
 	for (UInventorySlot* temp : Slots)
 	{

@@ -31,6 +31,10 @@ public:
 	void SetInitColor();//기본
 	void SetCantDeployColor();//배치 불가능
 
+	//디스플레이 크기 변경
+	UFUNCTION(BlueprintImplementableEvent,BlueprintCallable)
+	void ImageSizeUpdate(UItemDataAsset* DataAsset);
+
 	void UpdateQuantity();
 
 	UFUNCTION(BlueprintCallable)
@@ -96,7 +100,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 		bool IsMouseUpOnWidget = false;
 
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		USizeBox* IconSizeBox;
 	UPROPERTY(meta = (BindWidget))
 		UBorder* SlotBorder = nullptr;
