@@ -30,6 +30,7 @@ void UInventoryComponent::Init()
 		ItemSlots.Add(Val);
 		ItemSlotMap.Add(Val);
 	}
+	InitSelector();
 }
 
 void UInventoryComponent::InitSelector()

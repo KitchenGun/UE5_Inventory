@@ -32,6 +32,9 @@ public:
 	UPROPERTY(EditInstanceOnly, Category = "Settings", meta = (ClampMin = "0", ClampMax = "75", UIMin = "0", UIMax = "75", ExpseOnSpawn = true))
 		float TileSize = 50;
 
+	UPROPERTY(EditInstanceOnly, Category = "Class Settings")
+		EItemStorageType StorageType;
+
 	void SetInventoryComponent(UInventoryComponent* InvComp);
 
 	//저장소 형태 저장
@@ -56,11 +59,8 @@ public:
 
 	TArray<UInventorySlot*> Slots;
 	TMap<UInventorySlot*, bool> SlotmMap;
-
+	
 private:
 	UPROPERTY()
 		UInventoryComponent* InventoryComponent = nullptr;
-
-	UPROPERTY()
-		EItemStorageType StorageType;
 };

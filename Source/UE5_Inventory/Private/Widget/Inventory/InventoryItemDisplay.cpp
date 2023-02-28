@@ -21,25 +21,17 @@ void UInventoryItemDisplay::Init(UItemDataAsset* BasicItemData)
 	SetIsFocus(false);
 	if (ItemData)
 	{
+
 		ItemIcon->SetVisibility(ESlateVisibility::Visible);
 		ItemIcon->SetBrushFromSoftTexture(ItemData->GetThumbnail(), true);
-
 		if (ItemData->GetIsRotate())
 		{
 			ItemData->SetIsRotate(false);
 			IsRotate();
 		}
-		IconSizeBox->SetHeightOverride(ItemData->GetItemSize().Y * TileSize);
-		IconSizeBox->SetWidthOverride(ItemData->GetItemSize().X * TileSize);
-
 		ImageSizeUpdate(ItemData);
-
-		SetSelectorVisibility(false);
 		//텍스트 적용／／
-		//if (ItemData->GetQuantity() == 1)
-		//	StackSizeTextBlock->SetText(FText::FromString(FString::Printf(TEXT(""))));
-		//else
-		//	StackSizeTextBlock->SetText(FText(ItemData->GetItemName()));
+		NameTextBlock->SetText(FText(ItemData->GetItemName()));
 		//수량 표기 업데이트
 		UpdateQuantity();
 	}
@@ -100,8 +92,7 @@ void UInventoryItemDisplay::IsRotate()
 	//장비창의 아이템 디스플레이가 감춰진 상태에서 크기가 변하는 것을 막기 위한 if문
 	if (ItemData->GetStoragePos() < EItemStorageType::PrimaryWeapon || GetVisibility() != ESlateVisibility::Hidden)
 	{
-		IconSizeBox->SetHeightOverride(ItemData->GetItemSize().Y * TileSize);
-		IconSizeBox->SetWidthOverride(ItemData->GetItemSize().X * TileSize);
+		ImageSizeUpdate(ItemData);
 		ItemIcon->Brush.SetImageSize(FVector2D{ static_cast<double>(TileSize) ,static_cast<double>(TileSize) });
 	}
 

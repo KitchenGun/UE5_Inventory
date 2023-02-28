@@ -101,8 +101,6 @@ public:
 		bool IsMouseUpOnWidget = false;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		USizeBox* IconSizeBox;
-	UPROPERTY(meta = (BindWidget))
 		UBorder* SlotBorder = nullptr;
 	UPROPERTY(meta = (BindWidget))
 		UImage* Selector;
