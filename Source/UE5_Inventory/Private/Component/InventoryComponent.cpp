@@ -2,7 +2,6 @@
 
 #include "Components/GridPanel.h"
 #include "Components/GridSlot.h"
-#include "Kismet/GameplayStatics.h"
 #include "DataAsset/ItemDataAsset.h"
 #include "Engine/ActorChannel.h"
 #include "GameFramework/Character.h"
@@ -42,9 +41,9 @@ void UInventoryComponent::InitSelector()
 	CurItem = nullptr;
 	//아이템 선택 위젯
 	InventoryWidget->Selector->Reset();
-	InventoryWidget->Selector->SetStorage(EItemStorageType::SecureContainer);
+	InventoryWidget->Selector->SetStorage(EItemStorageType::BackPack);
 	InventoryWidget->Selector->SetInventoryIndex(0);
-	const FIntPoint ItemStartPoint = GetCoordinateByIndex(0, EItemStorageType::SecureContainer);
+	const FIntPoint ItemStartPoint = GetCoordinateByIndex(0, EItemStorageType::BackPack);
 	InventoryWidget->GetGrid(EItemStorageType::SecureContainer)->InventoryGridPanel->
 		AddChildToGrid(InventoryWidget->Selector, ItemStartPoint.Y, ItemStartPoint.X);
 	//size 초기화
@@ -987,6 +986,7 @@ bool UInventoryComponent::AddItem(UItemDataAsset* ItemDataAsset, int SlotIndex, 
 	InventoryItemDisplay->InvComp = this;
 	InventoryItemDisplay->Owner = InventoryWidget->GetGrid(StorageType);
 	InventoryItemDisplay->ItemData->SetStoragePos(StorageType);
+	InventoryItemDisplay->Selector->SetVisibility(ESlateVisibility::Hidden);
 	InventoryItemDisplay->UpdateQuantity();
 	const FIntPoint ItemStartPoint = GetCoordinateByIndex(SlotIndex, StorageType);
 
@@ -996,7 +996,7 @@ bool UInventoryComponent::AddItem(UItemDataAsset* ItemDataAsset, int SlotIndex, 
 	FillSlots(ItemStartPoint, ItemDataAsset->GetItemSize(), StorageType);
 
 	//필드 드랍 아이템을 가져오는 경우 필드에서 제거해줘야함
-	//AZCBaseItem* FieldItem =
+	//ABaseItem* FieldItem =
 	
 	return true;
 }
@@ -1014,6 +1014,7 @@ bool UInventoryComponent::IsItemAvailableForSlot(const int Index, const FIntPoin
 	{
 		for (int j = 0; j < ItemColumnSize; j++)
 		{
+			UE_LOG(LogTemp, Display, TEXT("%d %d"), (Coordinate.X + i) % InventoryWidget->GetGrid(StorageType)->ColumnCount, (Coordinate.Y + j) % InventoryWidget->GetGrid(StorageType)->RowCount);
 			if (ItemSlotMap[StorageType]
 				[ItemSlots[StorageType]
 				[GetSlotIndexByCoordinate((Coordinate.X + i) % InventoryWidget->GetGrid(StorageType)->ColumnCount, (Coordinate.Y + j) % InventoryWidget->GetGrid(StorageType)->RowCount, StorageType)]])

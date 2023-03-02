@@ -48,7 +48,8 @@ void UInventoryItemDisplay::SetCanDeployColor()
 {
 	if (SlotBorder)
 	{
-		SlotBorder->SetBrushColor(FLinearColor{ 1, 1, 0, .5 });
+		UE_LOG(LogTemp, Display, TEXT("green"));
+		SlotBorder->SetBrushColor(FLinearColor{ 1, 1, 0, 0.5f });
 	}
 }
 
@@ -57,6 +58,7 @@ void UInventoryItemDisplay::SetCantDeployColor()
 {
 	if (SlotBorder)
 	{
+		UE_LOG(LogTemp,Display,TEXT("red"));
 		SlotBorder->SetBrushColor(FLinearColor::Red);
 	}
 }
@@ -219,10 +221,9 @@ void UInventoryItemDisplay::NativeOnDragDetected(const FGeometry& InGeometry, co
 
 	//invcomp¿¡ ÀúÀå
 	WidgetDrag->DefaultDragVisual = DragVisual;
-	WidgetDrag->Pivot = EDragPivot::MouseDown;
+	WidgetDrag->Pivot = EDragPivot::TopLeft;
 	//FVector2D(-ItemData->GetItemSize().X / 2, ItemData->GetItemSize().Y / 2);
-
-
+	
 	OutOperation = WidgetDrag;
 
 	this->SetVisibility(ESlateVisibility::Hidden);
