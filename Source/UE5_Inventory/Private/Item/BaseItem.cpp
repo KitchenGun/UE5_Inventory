@@ -19,7 +19,6 @@ ABaseItem::ABaseItem()
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BoxCollision->SetupAttachment(MeshComponent);
 	BoxCollision->SetRelativeLocation({ 0,0,0 });
-	BoxCollision->bHiddenInGame = false;
 
 	SetReplicatingMovement(true);
 }
