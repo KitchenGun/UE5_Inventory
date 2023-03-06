@@ -290,8 +290,8 @@ public:
 		void IA_InventoryDrop();
 
 public:/*변수*/
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Blueprint Base")
-	//	TSubclassOf<ABaseItem> ItemBlueprint;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Blueprint Base")
+	TSubclassOf<ABaseItem> ItemBlueprint;
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Blueprint Base")
 	//	TSubclassOf<ABodyBag> BodyBagBlueprint;
 	UPROPERTY(EditDefaultsOnly, Category = "Class Settings")
@@ -301,7 +301,6 @@ public:/*변수*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UInputMappingContext* InvenInputMappingContext;
 
-		
 private:
 	//아이템 전부 저장한 목록
 	UPROPERTY(ReplicatedUsing = UpdateTotalItemContainer)

@@ -37,6 +37,7 @@ void ABaseItem::SetItemData(const FItemNetInfo& ItemNetInfo)
 void ABaseItem::SetItemData_Server_Implementation(const FItemNetInfo& ItemNetInfo)
 {
 	FItem NewItem = *Cast<UUE5_InventoryGameInstance>(GetGameInstance())->GetItemInfo(ItemNetInfo.ID);
+
 	//데이터 테이블 접근해서 받아오기
 	ItemData->SetItemInfo(NewItem);
 	MeshComponent->SetStaticMesh(NewItem.ItemMesh);

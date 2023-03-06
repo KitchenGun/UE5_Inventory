@@ -813,15 +813,15 @@ void UInventoryComponent::DropItem(FName ID, int32 Quantity, UItemDataAsset* Ite
 void UInventoryComponent::DropItem_Server_Implementation(const FItemNetInfo& ItemNetInfo)
 {
 	//아이템 스폰
-	//FActorSpawnParameters SpawnParams;
-	//FVector SpawnPosOffset = FVector::ZeroVector;
-	//SpawnPosOffset = GetOwner()->GetActorRotation().Vector();
-	//SpawnPosOffset = SpawnPosOffset.GetSafeNormal();
-	//SpawnPosOffset *= 100;
-	//ABaseItem* SpawnItem = GetWorld()->SpawnActor<ABaseItem>(ItemBlueprint, GetOwner()->GetActorLocation() + SpawnPosOffset, FRotator::ZeroRotator, SpawnParams);
-	//SpawnItem->SetItemData(ItemNetInfo);
-	//
-	//DropItem_NetMultiCast(ItemNetInfo);
+	FActorSpawnParameters SpawnParams;
+	FVector SpawnPosOffset = FVector::ZeroVector;
+	SpawnPosOffset = GetOwner()->GetActorRotation().Vector();
+	SpawnPosOffset = SpawnPosOffset.GetSafeNormal();
+	SpawnPosOffset *= 100;
+	ABaseItem* SpawnItem = GetWorld()->SpawnActor<ABaseItem>(ItemBlueprint,GetOwner()->GetActorLocation() + SpawnPosOffset, FRotator::ZeroRotator, SpawnParams);
+	SpawnItem->SetItemData(ItemNetInfo);
+	
+	DropItem_NetMultiCast(ItemNetInfo);
 }
 
 void UInventoryComponent::DropItem_NetMultiCast_Implementation(const FItemNetInfo& ItemNetInfo)
