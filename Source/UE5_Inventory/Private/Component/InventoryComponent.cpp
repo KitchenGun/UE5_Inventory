@@ -98,13 +98,7 @@ bool UInventoryComponent::IsOverGrid(FIntPoint Pos, EItemStorageType& Storage)
 	//기존 그리드에서는 범위 밖으로 나갔지만 다른 그리드에 들어가는 경우(백팩)
 	if (Storage == EItemStorageType::BackPack)
 	{
-		if ((Pos.X >= 0 && Pos.X < Min_X) && (Pos.Y >= 0 && Pos.Y < Min_Y))//보안 상자 범위
-		{
-			MoveGrid(-1);
-			Storage = EItemStorageType::SecureContainer;
-			return true;
-		}
-		else if (0 <= Pos.X && Pos.X < Max_X && 0 <= Pos.Y && Pos.Y < Max_Y)//범위 안
+		if (0 <= Pos.X && Pos.X < Max_X && 0 <= Pos.Y && Pos.Y < Max_Y)//범위 안
 		{
 			return true;
 		}
@@ -353,19 +347,11 @@ FIntPoint UInventoryComponent::SelectorFindItemPos(FIntPoint Pos, TPair<FIntPoin
 		if ((temp->ItemData->GetItemPos().X <= Pos.X && Pos.X < temp->ItemData->GetItemPos().X + temp->ItemData->GetItemSize().X)
 			&& (temp->ItemData->GetItemPos().Y <= Pos.Y && Pos.Y < temp->ItemData->GetItemPos().Y + temp->ItemData->GetItemSize().Y))
 		{//아이템과 공간이 겹칠 경우  아이템의 정보와 위치를 반환 선택 마커 교체
-			if (temp->ItemData->GetStoragePos() == EItemStorageType::BackPack && temp->ItemData->GetItemPos() == FIntPoint{ 0,0 })
-			{
-				temp->SetSelectorVisibility(false);//보안컨테이너일 경우
-				Pos = GetCoordinateByIndex(InventoryWidget->Selector->CurIndex, GetSelectorStorage());
-			}
-			else
-			{
-				temp->SetSelectorVisibility(true);
-				result = Pos;
-				//temp 아이템의 위치 , 크기
-				ItemSpace->Key = temp->ItemData->GetItemPos();
-				ItemSpace->Value = temp->ItemData->GetItemSize();
-			}
+			temp->SetSelectorVisibility(true);
+			result = Pos;
+			//temp 아이템의 위치 , 크기
+			ItemSpace->Key = temp->ItemData->GetItemPos();
+			ItemSpace->Value = temp->ItemData->GetItemSize();
 		}
 		else if (InventoryWidget->Selector->CurDisplayWidget != temp)
 		{

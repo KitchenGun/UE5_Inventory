@@ -95,6 +95,7 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
 					}
 					InventoryItemDisplay->SetInventoryIndex(SlotIndex);
 					InventoryItemDisplay->ItemData->SetItemPos({ Column,Row });
+					
 					InvComp->MoveSelector(InvComp->GetCoordinateByIndex(SlotIndex, StorageType), true);
 					InvComp->FillSlots(InvComp->GetCoordinateByIndex(SlotIndex, Owner->GetStorageType()), InvComp->GetCurItem()->GetItemSize(), Owner->GetStorageType());
 				}
