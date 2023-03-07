@@ -1000,7 +1000,6 @@ bool UInventoryComponent::IsItemAvailableForSlot(const int Index, const FIntPoin
 	{
 		for (int j = 0; j < ItemColumnSize; j++)
 		{
-			UE_LOG(LogTemp, Display, TEXT("%d %d"), (Coordinate.X + i) % InventoryWidget->GetGrid(StorageType)->ColumnCount, (Coordinate.Y + j) % InventoryWidget->GetGrid(StorageType)->RowCount);
 			if (ItemSlotMap[StorageType]
 				[ItemSlots[StorageType]
 				[GetSlotIndexByCoordinate((Coordinate.X + i) % InventoryWidget->GetGrid(StorageType)->ColumnCount, (Coordinate.Y + j) % InventoryWidget->GetGrid(StorageType)->RowCount, StorageType)]])
@@ -1249,7 +1248,6 @@ EItemStorageType UInventoryComponent::GetSelectorStorage()
 
 void UInventoryComponent::IA_InventoryMoveUp()
 {
-	UE_LOG(LogTemp,Display,TEXT("?input"));
 	if (GetIsOpenInventory())
 	{
 		MoveSelector({ 0 , -1 });
@@ -1320,7 +1318,7 @@ void UInventoryComponent::IA_InventoryItemRotate()
 	{
 		if (GetCurItem())
 		{
-			GetCurItem()->SetIsRotate(!GetCurItem()->GetIsRotate());
+			SelectorItemDisplayRoatate();
 		}
 	}
 }

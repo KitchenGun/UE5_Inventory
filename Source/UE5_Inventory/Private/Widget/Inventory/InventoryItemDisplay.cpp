@@ -48,7 +48,6 @@ void UInventoryItemDisplay::SetCanDeployColor()
 {
 	if (SlotBorder)
 	{
-		UE_LOG(LogTemp, Display, TEXT("green"));
 		SlotBorder->SetBrushColor(FLinearColor{ 1, 1, 0, 0.5f });
 	}
 }
@@ -58,7 +57,6 @@ void UInventoryItemDisplay::SetCantDeployColor()
 {
 	if (SlotBorder)
 	{
-		UE_LOG(LogTemp,Display,TEXT("red"));
 		SlotBorder->SetBrushColor(FLinearColor::Red);
 	}
 }
@@ -89,30 +87,9 @@ void UInventoryItemDisplay::IsRotate()
 	{
 		ItemData->SetIsRotate(false);
 	}
-
-	//크기 변경
-	//장비창의 아이템 디스플레이가 감춰진 상태에서 크기가 변하는 것을 막기 위한 if문
-	if (ItemData->GetStoragePos() < EItemStorageType::PrimaryWeapon || GetVisibility() != ESlateVisibility::Hidden)
-	{
-		ImageSizeUpdate(ItemData);
-		ItemIcon->Brush.SetImageSize(FVector2D{ static_cast<double>(TileSize) ,static_cast<double>(TileSize) });
-	}
-
-	//회전변경
-	if (!ItemData->GetIsRotate())
-	{
-		Cast<UCanvasPanelSlot>(ItemIcon->Slot)->SetPosition(FVector2D{ 0,0 });
-		ItemIcon->SetRenderTransformAngle(0);
-		ItemIcon->Brush.SetImageSize(FVector2D{ static_cast<double>(ItemData->GetItemSize().X) , static_cast<double>(ItemData->GetItemSize().Y) } *TileSize);
-	}
-	else
-	{
-		int temp = FMath::Abs(ItemData->GetItemSize().X - ItemData->GetItemSize().Y);
-		//상수 값 offset 집어넣어서 회전
-		Cast<UCanvasPanelSlot>(ItemIcon->Slot)->SetPosition(FVector2D{ static_cast<double>(-25 * temp),static_cast<double>(20 * temp) });
-		ItemIcon->SetRenderTransformAngle(90);
-		ItemIcon->Brush.SetImageSize(FVector2D{ static_cast<double>(ItemData->GetItemSize().X),static_cast<double>(ItemData->GetItemSize().Y) } *TileSize);
-	}
+	ImageSizeUpdate(ItemData);
+	//BP 회전함수 호출
+	ImageRotateUpdate(ItemData);
 
 	//변경 데이터가 넘어기기
 	if (Owner)

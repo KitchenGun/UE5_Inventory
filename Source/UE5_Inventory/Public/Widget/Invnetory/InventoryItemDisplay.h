@@ -35,6 +35,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent,BlueprintCallable)
 	void ImageSizeUpdate(UItemDataAsset* DataAsset);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ImageRotateUpdate(UItemDataAsset* DataAsset);
+
 	void UpdateQuantity();
 
 	UFUNCTION(BlueprintCallable)
