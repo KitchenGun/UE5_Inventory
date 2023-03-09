@@ -496,7 +496,7 @@ void UInventoryComponent::SelectMoveItem()
 			}
 			else//다른 공간으로 옮길때
 			{
-				ItemMoveOtherGrid(CurDisplay);
+				//ItemMoveOtherGrid(CurDisplay);
 			}
 
 			InventoryWidget->Selector->Reset();
@@ -1059,8 +1059,8 @@ UInventoryItemDisplay* UInventoryComponent::FindDisplayByItemData(UItemDataAsset
 		if (temp->ItemData == Data)
 			return temp;
 		//찾은 경우
-		if (temp->ItemData->GetNetPushId() == Data->GetNetPushId())
-			return temp;
+		//if (temp->ItemData->GetNetPushId() == Data->GetNetPushId())
+		//	return temp;
 	}
 	//못 찾은 경우
 	return nullptr;
@@ -1107,6 +1107,7 @@ void UInventoryComponent::FillSlots(const FIntPoint& StartPoint, const FIntPoint
 void UInventoryComponent::ClearSlots(const FIntPoint& StartPoint, const FIntPoint& ItemSize,
 	EItemStorageType StorageType)
 {
+	UE_LOG(LogTemp,Display,TEXT("%d %d %d %d"),StartPoint.X,StartPoint.Y, ItemSize.X, ItemSize.Y);
 	for (int i = 0; i < ItemSize.X; i++)
 	{
 		for (int j = 0; j < ItemSize.Y; j++)

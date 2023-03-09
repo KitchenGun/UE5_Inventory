@@ -59,7 +59,8 @@ void AUE5_InventoryCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	//InteractTimer// 종료시 까지 반복
-	GetWorldTimerManager().SetTimer(InteractHandler, this, &AUE5_InventoryCharacter::Interact, 0.1f, true);
+	if(IsLocallyControlled())
+		GetWorldTimerManager().SetTimer(InteractHandler, this, &AUE5_InventoryCharacter::Interact, 0.1f, true);
 }
 
 void AUE5_InventoryCharacter::InitInventoryComp()
