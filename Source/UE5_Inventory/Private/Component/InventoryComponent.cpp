@@ -582,6 +582,7 @@ bool UInventoryComponent::PickUpItem(ABaseItem* Item)
 
 bool UInventoryComponent::PickUpItem(UItemDataAsset* ItemData)
 {
+	UE_LOG(LogTemp, Display, TEXT("pick"));
 	/* 장착중인 아이템 처리 필요 */
 	if (HasBackPack)//백팩
 	{

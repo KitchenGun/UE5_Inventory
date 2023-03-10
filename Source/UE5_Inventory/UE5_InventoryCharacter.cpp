@@ -162,12 +162,18 @@ void AUE5_InventoryCharacter::IA_Interact()
 {
 	ABaseItem* Item = Cast<ABaseItem>(InteractLineTraceFunc());
 	//아이템인 경우
-	if(IsValid(Item))
+	if(IsValid(Item)&&IsLocallyControlled())
 	{	//상호작용
 		Item->Interact();
 		InventoryComponent->PickUpItem(Item);
 	}
 }
+
+APlayerController* AUE5_InventoryCharacter::GetPC() const
+{
+	return const_cast<APlayerController*>(GetOwner()->GetNetOwningPlayer()->GetPlayerController(GetWorld()));
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // Input

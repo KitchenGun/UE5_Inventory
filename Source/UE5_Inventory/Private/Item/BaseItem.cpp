@@ -49,5 +49,7 @@ void ABaseItem::Interact()
 	if(Player==nullptr)
 		return;
 	Player->GetInteractableObject_Server(Player->FindComponentByClass<UInventoryComponent>(), this);
+	//RTT로 인해서 중복으로 들어오지 않게 삭제
+	this->Destroy();
 }
 

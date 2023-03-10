@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interface/CharacterInterface.h"
 #include "UE5_InventoryCharacter.generated.h"
 
 
 class UInventoryComponent;
 
 UCLASS(config=Game)
-class AUE5_InventoryCharacter : public ACharacter
+class AUE5_InventoryCharacter : public ACharacter,public ICharacterInterface
 {
 	GENERATED_BODY()
 
@@ -63,6 +64,10 @@ public:
 		void IA_MoveRightLeft(float Value);
 	UFUNCTION(BlueprintCallable)
 	void IA_Interact();
+
+	//Interface
+	virtual APlayerController* GetPC() const override;
+
 protected:
 
 	/** Called for forwards/backward input */
