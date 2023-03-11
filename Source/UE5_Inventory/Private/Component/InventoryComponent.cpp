@@ -770,8 +770,9 @@ void UInventoryComponent::ResetInventory(EItemStorageType Storage)
 
 void UInventoryComponent::DropItem(FName ID, int32 Quantity, UItemDataAsset* Item)
 {
-	if (GetWorld()->GetFirstPlayerController() && IsValid(Item))
+	if (GetWorld()->GetFirstPlayerController()->IsLocalController() && IsValid(Item))
 	{
+		UE_LOG(LogTemp, Display, TEXT("?"));
 		FItemNetInfo TempItemNetInfo;
 		TempItemNetInfo.ID = ID;
 		TempItemNetInfo.Quantity = Quantity;

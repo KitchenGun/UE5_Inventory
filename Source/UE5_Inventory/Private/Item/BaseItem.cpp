@@ -19,7 +19,7 @@ ABaseItem::ABaseItem()
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BoxCollision->SetupAttachment(MeshComponent);
 	BoxCollision->SetRelativeLocation({ 0,0,0 });
-
+	
 	SetReplicatingMovement(true);
 }
 
@@ -38,7 +38,7 @@ void ABaseItem::SetItemData_Server_Implementation(const FItemNetInfo& ItemNetInf
 	FItem NewItem = *Cast<UUE5_InventoryGameInstance>(GetGameInstance())->GetItemInfo(ItemNetInfo.ID);
 
 	//데이터 테이블 접근해서 받아오기
-	ItemData->SetItemInfo(NewItem);
+	ItemData->SetItemInfo(NewItem) ;
 	MeshComponent->SetStaticMesh(NewItem.ItemMesh);
 	ItemData->SetQuantity(ItemNetInfo.Quantity);
 }
