@@ -573,7 +573,7 @@ void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 
 bool UInventoryComponent::PickUpItem(ABaseItem* Item)
 {
-	if (IsValid(Item->ItemData))
+	if (IsValid(Item->ItemData)&&Cast<APawn>(GetOwner())->IsLocallyControlled())
 	{
 		return PickUpItem(Item->ItemData);
 	}
@@ -582,7 +582,6 @@ bool UInventoryComponent::PickUpItem(ABaseItem* Item)
 
 bool UInventoryComponent::PickUpItem(UItemDataAsset* ItemData)
 {
-	UE_LOG(LogTemp, Display, TEXT("pick"));
 	/* 장착중인 아이템 처리 필요 */
 	if (HasBackPack)//백팩
 	{
@@ -772,7 +771,6 @@ void UInventoryComponent::DropItem(FName ID, int32 Quantity, UItemDataAsset* Ite
 {
 	if (GetWorld()->GetFirstPlayerController()->IsLocalController() && IsValid(Item))
 	{
-		UE_LOG(LogTemp, Display, TEXT("?"));
 		FItemNetInfo TempItemNetInfo;
 		TempItemNetInfo.ID = ID;
 		TempItemNetInfo.Quantity = Quantity;
@@ -1109,7 +1107,6 @@ void UInventoryComponent::FillSlots(const FIntPoint& StartPoint, const FIntPoint
 void UInventoryComponent::ClearSlots(const FIntPoint& StartPoint, const FIntPoint& ItemSize,
 	EItemStorageType StorageType)
 {
-	UE_LOG(LogTemp,Display,TEXT("%d %d %d %d"),StartPoint.X,StartPoint.Y, ItemSize.X, ItemSize.Y);
 	for (int i = 0; i < ItemSize.X; i++)
 	{
 		for (int j = 0; j < ItemSize.Y; j++)
