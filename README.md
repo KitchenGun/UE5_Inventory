@@ -10,8 +10,4 @@ Unreal Engine : 5.0.3
 
 ‘획득, 버리기, 이동, 아이템 회전’ 기능을 중점으로 구현하였습니다.
 
-![image](https://user-images.githubusercontent.com/41855240/224978039-5408fb26-724a-4b84-b124-c5753e16b940.png)
-
-
-https://youtu.be/qXlSRp6Ap7I
-![image](https://user-images.githubusercontent.com/41855240/224978377-d1e6fce9-e01d-4980-8a98-5b60fc9c01cc.png)
+Youtube Link : https://youtu.be/qXlSRp6Ap7I
