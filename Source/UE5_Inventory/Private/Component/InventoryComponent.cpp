@@ -776,35 +776,9 @@ void UInventoryComponent::DropItem(FName ID, int32 Quantity, UItemDataAsset* Ite
 		TempItemNetInfo.Quantity = Quantity;
 		DropItem_Server(TempItemNetInfo);
 		//아이템 디스플레이 초기화
-		if (InventoryWidget->Selector->GetIsPointToEquipmentPlace())
-		{
-			//switch (GetSelectorStorage())
-			//{
-			//case EItemStorageType::PrimaryWeapon:
-			//	//비어있지 않으면 장착 해제
-			//	if (!InventoryWidget->PrimaryWeapon->GetIsSlotEmpty())
-			//	{
-			//		InventoryWidget->PrimaryWeapon->RemoveEquipment();
-			//	}
-			//	break;
-			//case EItemStorageType::PrimaryWeapon1:
-			//	//비어있지 않으면 장착 해제
-			//	if (!InventoryWidget->PrimaryWeapon1->GetIsSlotEmpty())
-			//	{
-			//		InventoryWidget->PrimaryWeapon1->RemoveEquipment();
-			//	}
-			//	break;
-			//default:
-			//	break;
-			//}
-		}
-		else
-		{
-			InitSelector();
-			//삭제
-			RemoveItem(Item);
-		}
-
+		InitSelector();
+		//삭제
+		RemoveItem(Item);
 		//기능 UI 비활성화
 		InventoryWidget->DisableSelectInfos();
 	}
@@ -819,9 +793,10 @@ void UInventoryComponent::DropItem_Server_Implementation(const FItemNetInfo& Ite
 	SpawnPosOffset = SpawnPosOffset.GetSafeNormal();
 	SpawnPosOffset *= 100;
 	ABaseItem* SpawnItem = GetWorld()->SpawnActor<ABaseItem>(ItemBlueprint,GetOwner()->GetActorLocation() + SpawnPosOffset, FRotator::ZeroRotator, SpawnParams);
+	
 	SpawnItem->SetItemData(ItemNetInfo);
 	
-	DropItem_NetMultiCast(ItemNetInfo);
+	//DropItem_NetMultiCast(ItemNetInfo);
 }
 
 void UInventoryComponent::DropItem_NetMultiCast_Implementation(const FItemNetInfo& ItemNetInfo)
