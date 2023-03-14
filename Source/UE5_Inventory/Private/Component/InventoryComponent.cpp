@@ -1246,6 +1246,11 @@ EItemStorageType UInventoryComponent::GetSelectorStorage()
 	return InventoryWidget->Selector->StorageType;
 }
 
+void UInventoryComponent::SetSelectorStorage(EItemStorageType Storage)
+{
+	InventoryWidget->Selector->SetStorage(Storage);
+}
+
 void UInventoryComponent::IA_InventoryMoveUp()
 {
 	if (GetIsOpenInventory())

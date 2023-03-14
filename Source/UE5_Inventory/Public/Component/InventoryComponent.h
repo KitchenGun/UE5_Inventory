@@ -262,7 +262,10 @@ public:
 	FORCEINLINE FIntPoint GetGridSize(EItemStorageType Storage);
 
 	FORCEINLINE EItemStorageType GetSelectorStorage();
-	
+
+	FORCEINLINE void SetSelectorStorage(EItemStorageType Storage);
+
+
 	//widget
 	UInventoryWidget* GetInvWidget()
 	{
