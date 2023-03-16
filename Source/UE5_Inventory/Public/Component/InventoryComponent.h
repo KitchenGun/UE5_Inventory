@@ -309,9 +309,9 @@ private:
 	UPROPERTY(ReplicatedUsing = UpdateTotalItemContainer)
 		TArray<UItemDataAsset*> TotalItemContainer;
 	//그리드 저장 정보
-	TMap<EItemStorageType, TArray<UInventoryItemDisplay*>> ItemContainer;
-	TMap<EItemStorageType, TArray<UInventorySlot*>> ItemSlots;
-	TMap<EItemStorageType, TMap<UInventorySlot*, bool>> ItemSlotMap;
+	TMap<EItemStorageType, TArray<UInventoryItemDisplay*>> ItemContainer;	//ItemDisplay들 저장
+	TMap<EItemStorageType, TArray<UInventorySlot*>> ItemSlots;				//각그리드의 Slot(WBP)의 정보들 저장
+	TMap<EItemStorageType, TMap<UInventorySlot*, bool>> ItemSlotMap;		//각그리드의 Slot 공간 비었는지 확인용
 	TMap<int32, ABaseItem*> FieldDropItems;
 
 	//인벤토리 위젯
